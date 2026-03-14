@@ -1,0 +1,34 @@
+//
+//  UserDefaultsCityStorage.swift
+//  WeatherAppiOS
+//
+//  Created by Sergey Abadzhev on 13.03.26.
+//
+
+import Foundation
+
+final class UserDefaultsCityStorage: CityStorage {
+
+    private let key = "saved_cities"
+    private let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+    }
+
+    func saveCities(_ cities: [City]) {
+        let dtos = cities.map { CityStorageDTO(from: $0) }
+        if let data = try? JSONEncoder().encode(dtos) {
+            defaults.set(data, forKey: key)
+        }
+    }
+
+    func loadCities() -> [City] {
+        guard
+            let data = defaults.data(forKey: key),
+            let dtos = try? JSONDecoder().decode([CityStorageDTO].self, from: data)
+        else { return [] }
+
+        return dtos.map { $0.toDomain() }
+    }
+}

@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct WeatherAppiOSApp: App {
+
+    @State private var coordinator = AppCoordinator()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environment(coordinator)
         }
     }
 }
