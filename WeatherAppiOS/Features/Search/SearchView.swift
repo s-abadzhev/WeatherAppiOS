@@ -11,7 +11,6 @@ struct SearchView: View {
 
     @State var viewModel: SearchViewModel
     @Environment(\.dismiss) private var dismiss
-
     let onCitySelected: (City) -> Void
 
     var body: some View {
@@ -19,137 +18,43 @@ struct SearchView: View {
             BackgroundView(condition: nil)
 
             VStack(spacing: 0) {
-                searchBar
+                SearchBarView(query: $viewModel.query) {
+                    dismiss()
+                }
 
                 if viewModel.isLoading {
-                    loadingView
+                    ProgressView()
+                        .tint(.white)
+                        .padding(.top, 40)
                 } else if !viewModel.results.isEmpty {
-                    searchResultsList
-                } else if viewModel.query.count >= 2 && !viewModel.isLoading {
-                    emptyResultsView
+                    SearchResultsListView(results: viewModel.results) { city in
+                        viewModel.saveCity(city)
+                        onCitySelected(city)
+                        dismiss()
+                    }
+                } else if viewModel.query.count >= 2 {
+                    SearchEmptyStateView(state: .noResults)
+                } else if viewModel.savedCities.isEmpty {
+                    SearchEmptyStateView(state: .startTyping)
                 } else {
-                    savedCitiesList
+                    SavedCitiesListView(
+                        cities: viewModel.savedCities,
+                        onSelect: { city in
+                            onCitySelected(city)
+                            dismiss()
+                        },
+                        onDelete: { city in
+                            viewModel.removeCity(city)
+                        }
+                    )
                 }
 
                 Spacer()
             }
         }
         .navigationBarHidden(true)
-    }
-
-    // MARK: - Subviews
-
-    private var searchBar: some View {
-        HStack(spacing: 12) {
-            HStack(spacing: 8) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.white.opacity(0.6))
-
-                TextField("", text: $viewModel.query, prompt:
-                    Text(L10n.Search.placeholder)
-                        .foregroundStyle(.white.opacity(0.4))
-                )
-                .foregroundStyle(.white)
-                .autocorrectionDisabled()
-                .onChange(of: viewModel.query) {
-                    viewModel.onQueryChanged()
-                }
-
-                if !viewModel.query.isEmpty {
-                    Button {
-                        viewModel.query = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(.white.opacity(0.5))
-                    }
-                }
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 10)
-            .background(.ultraThinMaterial.opacity(0.6))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-
-            Button(L10n.Search.cancel) { dismiss() }
-            .foregroundStyle(.white)
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 16)
-        .padding(.bottom, 12)
-    }
-
-    private var searchResultsList: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                ForEach(viewModel.results) { city in
-                    CityRowView(city: city) {
-                        viewModel.saveCity(city)
-                        onCitySelected(city)
-                        dismiss()
-                    }
-                }
-            }
-            .padding(.horizontal, 16)
-        }
-    }
-
-    private var savedCitiesList: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            if !viewModel.savedCities.isEmpty {
-                Text(L10n.Search.savedCities)
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.5))
-                    .textCase(.uppercase)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 8)
-
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        ForEach(viewModel.savedCities) { city in
-                            CityRowView(city: city, isSaved: true) {
-                                onCitySelected(city)
-                                dismiss()
-                            } onDelete: {
-                                viewModel.removeCity(city)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                }
-            } else {
-                emptyStateView
-            }
-        }
-    }
-
-    private var loadingView: some View {
-        VStack(spacing: 12) {
-            Spacer().frame(height: 40)
-            ProgressView()
-                .tint(.white)
-        }
-    }
-
-    private var emptyResultsView: some View {
-        VStack(spacing: 12) {
-            Spacer().frame(height: 40)
-            Image(systemName: "magnifyingglass")
-                .font(.system(size: 36))
-                .foregroundStyle(.white.opacity(0.4))
-            Text(L10n.Search.notFound)
-                .font(.system(size: 16))
-                .foregroundStyle(.white.opacity(0.5))
-        }
-    }
-
-    private var emptyStateView: some View {
-        VStack(spacing: 12) {
-            Spacer().frame(height: 60)
-            Image(systemName: "mappin.slash")
-                .font(.system(size: 36))
-                .foregroundStyle(.white.opacity(0.4))
-            Text(L10n.Search.startTyping)
-                .font(.system(size: 16))
-                .foregroundStyle(.white.opacity(0.5))
+        .onChange(of: viewModel.query) {
+            viewModel.onQueryChanged()
         }
     }
 }
