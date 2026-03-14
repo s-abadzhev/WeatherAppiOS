@@ -17,15 +17,15 @@ final class SearchViewModel {
     var isLoading = false
     var error: String?
 
-    private let repository: WeatherRepository
+    private let cityRepository: CityRepository
     private let storage: CityStorage
     private var searchTask: Task<Void, Never>?
 
     init(
-        repository: WeatherRepository,
+        cityRepository: CityRepository,
         storage: CityStorage
     ) {
-        self.repository = repository
+        self.cityRepository = cityRepository
         self.storage = storage
         self.savedCities = storage.loadCities()
     }
@@ -55,7 +55,7 @@ final class SearchViewModel {
         defer { isLoading = false }
 
         do {
-            results = try await repository.searchCity(query: query)
+            results = try await cityRepository.searchCity(query: query)
         } catch {
             self.error = error.localizedDescription
             results = []

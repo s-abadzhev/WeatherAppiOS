@@ -22,7 +22,7 @@ struct RootView: View {
             }
             .fullScreenCover(isPresented: $coordinator.isSearchPresented) {
                 SearchView(viewModel: SearchViewModel(
-                    repository: coordinator.repository,
+                    cityRepository: coordinator.cityRepository,
                     storage: coordinator.cityStorage
                 )) { city in
                     coordinator.selectedCity = city

@@ -10,19 +10,16 @@ import Foundation
 final class WeatherRepositoryImpl: WeatherRepository {
 
     private let networkClient: NetworkClient
-    private let geocoderService: GeocoderService
+    private let cityRepository: CityRepository
 
     init(networkClient: NetworkClient = URLSessionNetworkClient.shared,
-         geocoderService: GeocoderService = CLGeocoderService()
-    ) {
+         cityRepository: CityRepository) {
         self.networkClient = networkClient
-        self.geocoderService = geocoderService
+        self.cityRepository = cityRepository
     }
 
-    // MARK: - WeatherRepository
-
     func fetchCurrentWeather(lat: Double, lon: Double) async throws -> Weather {
-        let city = try await geocoderService.reverseGeocode(lat: lat, lon: lon)
+        let city = try await cityRepository.reverseGeocode(lat: lat, lon: lon)
         let weather: CurrentWeatherResponseDTO = try await networkClient.request(.currentWeather(lat: lat, lon: lon))
         return WeatherMapper.toDomain(response: weather, city: city)
     }
@@ -35,7 +32,4 @@ final class WeatherRepositoryImpl: WeatherRepository {
         )
     }
 
-    func searchCity(query: String) async throws -> [City] {
-        try await geocoderService.searchCity(query: query)
-    }
 }

@@ -17,9 +17,11 @@ final class AppCoordinator {
     let repository: WeatherRepository
     let locationManager: LocationManager
     let cityStorage: CityStorage
+    let cityRepository: CityRepository
 
     init() {
-        self.repository = WeatherRepositoryImpl()
+        self.cityRepository = CityRepositoryImpl()
+        self.repository = WeatherRepositoryImpl(cityRepository: self.cityRepository)
         self.locationManager = LocationManager()
         self.cityStorage = UserDefaultsCityStorage()
     }
