@@ -16,13 +16,13 @@ enum LocationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .permissionDenied:
-            return "Доступ к геолокации запрещён. Разрешите доступ в Настройках."
+            return L10n.Location.permissionDenied
         case .permissionRestricted:
-            return "Доступ к геолокации ограничен."
+            return L10n.Location.permissionRestricted
         case .locationUnavailable:
-            return "Не удалось определить местоположение."
+            return L10n.Location.unavailable
         case .timeout:
-            return "Превышено время ожидания геолокации."
+            return L10n.Location.timeout
         }
     }
 }

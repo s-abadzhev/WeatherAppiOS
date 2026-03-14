@@ -16,13 +16,12 @@ extension Date {
     }
 
     var formattedWeekday: String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.dateFormat = "EEEE"
-        let weekday = formatter.string(from: self).capitalized
+        if Calendar.current.isDateInToday(self) { return L10n.Forecast.today }
+        if Calendar.current.isDateInTomorrow(self) { return L10n.Forecast.tomorrow }
 
-        if Calendar.current.isDateInToday(self) { return "Сегодня" }
-        if Calendar.current.isDateInTomorrow(self) { return "Завтра" }
-        return weekday
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current // автоматически подхватывает язык системы
+        formatter.dateFormat = "EEEE"
+        return formatter.string(from: self).capitalized
     }
 }

@@ -46,7 +46,7 @@ struct SearchView: View {
                     .foregroundStyle(.white.opacity(0.6))
 
                 TextField("", text: $viewModel.query, prompt:
-                    Text("Поиск города...")
+                    Text(L10n.Search.placeholder)
                         .foregroundStyle(.white.opacity(0.4))
                 )
                 .foregroundStyle(.white)
@@ -69,9 +69,7 @@ struct SearchView: View {
             .background(.ultraThinMaterial.opacity(0.6))
             .clipShape(RoundedRectangle(cornerRadius: 12))
 
-            Button("Отмена") {
-                dismiss()
-            }
+            Button(L10n.Search.cancel) { dismiss() }
             .foregroundStyle(.white)
         }
         .padding(.horizontal, 16)
@@ -97,7 +95,7 @@ struct SearchView: View {
     private var savedCitiesList: some View {
         VStack(alignment: .leading, spacing: 12) {
             if !viewModel.savedCities.isEmpty {
-                Text("Сохранённые города")
+                Text(L10n.Search.savedCities)
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(.white.opacity(0.5))
                     .textCase(.uppercase)
@@ -137,7 +135,7 @@ struct SearchView: View {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 36))
                 .foregroundStyle(.white.opacity(0.4))
-            Text("Город не найден")
+            Text(L10n.Search.notFound)
                 .font(.system(size: 16))
                 .foregroundStyle(.white.opacity(0.5))
         }
@@ -149,7 +147,7 @@ struct SearchView: View {
             Image(systemName: "mappin.slash")
                 .font(.system(size: 36))
                 .foregroundStyle(.white.opacity(0.4))
-            Text("Начните вводить название города")
+            Text(L10n.Search.startTyping)
                 .font(.system(size: 16))
                 .foregroundStyle(.white.opacity(0.5))
         }

@@ -23,11 +23,17 @@ extension Double {
 
     var formattedUV: String {
         switch self {
-        case 0..<3:  return "Низкий"
-        case 3..<6:  return "Умеренный"
-        case 6..<8:  return "Высокий"
-        case 8..<11: return "Очень высокий"
-        default:     return "Экстремальный"
+        case 0..<3:  return L10n.UV.low
+        case 3..<6:  return L10n.UV.moderate
+        case 6..<8:  return L10n.UV.high
+        case 8..<11: return L10n.UV.veryHigh
+        default:     return L10n.UV.extreme
         }
+    }
+
+    var formattedWindSpeed: String {
+        L10n.Error.windSpeed(
+            formatted(.number.precision(.fractionLength(1)))
+        )
     }
 }

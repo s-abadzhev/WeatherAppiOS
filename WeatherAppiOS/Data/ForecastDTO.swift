@@ -19,15 +19,6 @@ struct DailyDTO: Decodable {
     let precipitationSum: [Double]
     let precipitationProbabilityMax: [Int]
     let weatherCode: [Int]
-
-//    enum CodingKeys: String, CodingKey {
-//        case time
-//        case temperature2mMax = "temperature_2m_max"
-//        case temperature2mMin = "temperature_2m_min"
-//        case precipitationSum = "precipitation_sum"
-//        case precipitationProbabilityMax = "precipitation_probability_max"
-//        case weatherCode = "weather_code"
-//    }
 }
 
 struct HourlyDTO: Decodable {
@@ -36,12 +27,4 @@ struct HourlyDTO: Decodable {
     let precipitationProbability: [Int]
     let windSpeed10M: [Double]
     let weatherCode: [Int]
-
-//    enum CodingKeys: String, CodingKey {
-//        case time
-//        case temperature2m = "temperature_2m"
-//        case precipitationProbability = "precipitation_probability"
-//        case windSpeed10m = "wind_speed_10m"
-//        case weatherCode = "weather_code"
-//    }
 }

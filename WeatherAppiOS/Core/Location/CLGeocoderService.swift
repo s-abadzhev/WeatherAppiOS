@@ -20,18 +20,13 @@ final class CLGeocoderService: GeocoderService {
             let placemark = placemarks.first
 
             return City(
-                name: placemark?.locality ?? "Моё местоположение",
-                country: placemark?.country ?? "",
+                name: placemark?.locality ?? L10n.Location.myLocation,
+                country: placemark?.country ?? L10n.Location.unknown,
                 latitude: lat,
                 longitude: lon
             )
         } catch {
-            return City(
-                name: "Моё местоположение",
-                country: "",
-                latitude: lat,
-                longitude: lon
-            )
+            return placeholder(lat: lat, lon: lon)
         }
     }
 
@@ -58,6 +53,11 @@ final class CLGeocoderService: GeocoderService {
     }
 
     private func placeholder(lat: Double, lon: Double) -> City {
-        City(name: "Моё местоположение", country: "", latitude: lat, longitude: lon)
+        City(
+            name: L10n.Location.myLocation,
+            country: L10n.Location.unknown,
+            latitude: lat,
+            longitude: lon
+        )
     }
 }

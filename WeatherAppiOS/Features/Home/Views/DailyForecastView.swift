@@ -14,7 +14,7 @@ struct DailyForecastView: View {
     var body: some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 12) {
-                Label("7-дневный прогноз", systemImage: "calendar")
+                Label(L10n.Forecast.daily, systemImage: "calendar")
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(.white.opacity(0.6))
                     .textCase(.uppercase)

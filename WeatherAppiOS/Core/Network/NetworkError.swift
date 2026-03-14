@@ -18,17 +18,17 @@ enum NetworkError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Неверный URL"
+            return L10n.Error.invalidURL
         case .noInternetConnection:
-            return "Нет подключения к интернету"
+            return L10n.Error.noInternet
         case .timeout:
-            return "Превышено время ожидания"
+            return L10n.Error.timeout
         case .serverError(let code):
-            return "Ошибка сервера: \(code)"
-        case .decodingError(let error):
-            return "Ошибка парсинга: \(error.localizedDescription)"
+            return L10n.Error.server(code)
+        case .decodingError:
+            return L10n.Error.decoding
         case .unknown(let error):
-            return "Неизвестная ошибка: \(error.localizedDescription)"
+            return error.localizedDescription
         }
     }
 }

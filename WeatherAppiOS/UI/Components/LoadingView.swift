@@ -13,7 +13,7 @@ struct LoadingView: View {
             ProgressView()
                 .tint(.white)
                 .scaleEffect(1.5)
-            Text("Загрузка погоды...")
+            Text(L10n.Loading.weather)
                 .font(.system(size: 16))
                 .foregroundStyle(.white.opacity(0.7))
         }

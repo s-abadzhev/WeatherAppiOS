@@ -19,17 +19,16 @@ enum WeatherCondition {
 
     var title: String {
         switch self {
-        case .clearSky:      return "Ясно"
-        case .partlyCloudy:  return "Переменная облачность"
-        case .overcast:      return "Пасмурно"
-        case .fog:           return "Туман"
-        case .drizzle:       return "Морось"
-        case .rain:          return "Дождь"
-        case .snowfall:      return "Снег"
-        case .thunderstorm:  return "Гроза"
+        case .clearSky:     return L10n.Weather.clearSky
+        case .partlyCloudy: return L10n.Weather.partlyCloudy
+        case .overcast:     return L10n.Weather.overcast
+        case .fog:          return L10n.Weather.fog
+        case .drizzle:      return L10n.Weather.drizzle
+        case .rain:         return L10n.Weather.rain
+        case .snowfall:     return L10n.Weather.snowfall
+        case .thunderstorm: return L10n.Weather.thunderstorm
         }
     }
-
     var systemImage: String {
         switch self {
         case .clearSky:      return "sun.max.fill"

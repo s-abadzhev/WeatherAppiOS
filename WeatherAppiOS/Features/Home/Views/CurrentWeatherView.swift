@@ -26,7 +26,7 @@ struct CurrentWeatherView: View {
                 .foregroundStyle(.white.opacity(0.8))
 
             HStack(spacing: 8) {
-                Text("Ощущается как \(weather.feelsLike.formattedTemp)")
+                Text("details.feels_like".localized(weather.feelsLike.formattedTemp))
                     .font(.system(size: 16))
                     .foregroundStyle(.white.opacity(0.7))
             }

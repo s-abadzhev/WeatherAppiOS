@@ -14,7 +14,7 @@ struct HourlyForecastView: View {
     var body: some View {
         GlassCard {
             VStack(alignment: .leading, spacing: 12) {
-                Label("Почасовой прогноз", systemImage: "clock")
+                Label(L10n.Forecast.hourly, systemImage: "clock")
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(.white.opacity(0.6))
                     .textCase(.uppercase)

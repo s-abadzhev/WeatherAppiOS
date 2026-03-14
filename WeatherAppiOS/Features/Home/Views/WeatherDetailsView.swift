@@ -13,26 +13,10 @@ struct WeatherDetailsView: View {
 
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-            DetailCard(
-                icon: "humidity.fill",
-                title: "Влажность",
-                value: "\(weather.humidity)%"
-            )
-            DetailCard(
-                icon: "wind",
-                title: "Ветер",
-                value: "\(weather.windSpeed.formatted(.number.precision(.fractionLength(1)))) м/с"
-            )
-            DetailCard(
-                icon: "sun.max.fill",
-                title: "УФ-индекс",
-                value: weather.uvIndex.formattedUV
-            )
-            DetailCard(
-                icon: "eye.fill",
-                title: "Видимость",
-                value: weather.visibility.formattedVisibility
-            )
+            DetailCard(icon: "humidity.fill",  title: L10n.Details.humidity,    value: "\(weather.humidity)%")
+            DetailCard(icon: "wind",           title: L10n.Details.wind,         value: weather.windSpeed.formattedWindSpeed)
+            DetailCard(icon: "sun.max.fill",   title: L10n.Details.uvIndex,      value: weather.uvIndex.formattedUV)
+            DetailCard(icon: "eye.fill",       title: L10n.Details.visibility,   value: weather.visibility.formattedVisibility)
         }
     }
 }
