@@ -22,8 +22,8 @@ final class HomeViewModel {
     private let locationManager: LocationManager
 
     init(
-        repository: WeatherRepository = WeatherRepositoryImpl(),
-        locationManager: LocationManager = LocationManager()
+        repository: WeatherRepository,
+        locationManager: LocationManager
     ) {
         self.repository = repository
         self.locationManager = locationManager

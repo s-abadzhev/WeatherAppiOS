@@ -13,4 +13,14 @@ final class AppCoordinator {
 
     var selectedCity: City?
     var isSearchPresented = false
+
+    let repository: WeatherRepository
+    let locationManager: LocationManager
+    let cityStorage: CityStorage
+
+    init() {
+        self.repository = WeatherRepositoryImpl()
+        self.locationManager = LocationManager()
+        self.cityStorage = UserDefaultsCityStorage()
+    }
 }

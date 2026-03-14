@@ -13,12 +13,18 @@ struct RootView: View {
 
     var body: some View {
         @Bindable var coordinator = coordinator
-        HomeView(selectedCity: coordinator.selectedCity)
+        HomeView(viewModel: HomeViewModel(
+            repository: coordinator.repository,
+            locationManager: coordinator.locationManager
+        ), selectedCity: coordinator.selectedCity)
             .overlay(alignment: .topTrailing) {
                 searchButton
             }
             .fullScreenCover(isPresented: $coordinator.isSearchPresented) {
-                SearchView { city in
+                SearchView(viewModel: SearchViewModel(
+                    repository: coordinator.repository,
+                    storage: coordinator.cityStorage
+                )) { city in
                     coordinator.selectedCity = city
                 }
             }

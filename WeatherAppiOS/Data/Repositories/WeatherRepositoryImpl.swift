@@ -38,18 +38,4 @@ final class WeatherRepositoryImpl: WeatherRepository {
     func searchCity(query: String) async throws -> [City] {
         try await geocoderService.searchCity(query: query)
     }
-
-    // MARK: - Private
-
-//    private func fetchCity(lat: Double, lon: Double) async throws -> City {
-//        let query = "\(lat),\(lon)"
-//        let results = try await searchCity(query: query)
-//
-//        return results.first ?? City(
-//            name: "Моё местоположение",
-//            country: "",
-//            latitude: lat,
-//            longitude: lon
-//        )
-//    }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchView: View {
 
-    @State private var viewModel = SearchViewModel()
+    @State var viewModel: SearchViewModel
     @Environment(\.dismiss) private var dismiss
 
     let onCitySelected: (City) -> Void

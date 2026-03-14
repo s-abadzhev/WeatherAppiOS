@@ -22,8 +22,8 @@ final class SearchViewModel {
     private var searchTask: Task<Void, Never>?
 
     init(
-        repository: WeatherRepository = WeatherRepositoryImpl(),
-        storage: CityStorage = UserDefaultsCityStorage()
+        repository: WeatherRepository,
+        storage: CityStorage
     ) {
         self.repository = repository
         self.storage = storage

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
 
+    @State var viewModel: HomeViewModel
     let selectedCity: City?
-    @State private var viewModel = HomeViewModel()
 
     var body: some View {
         ZStack {
