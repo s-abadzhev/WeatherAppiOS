@@ -20,8 +20,4 @@ struct Weather {
     let updatedAt: Date
 }
 
-extension Weather: Equatable {
-    public static func == (lhs: Weather, rhs: Weather) -> Bool {
-        lhs.city == rhs.city && lhs.temperature == rhs.temperature
-    }
-}
+extension Weather: Equatable {}

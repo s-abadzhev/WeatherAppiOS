@@ -30,6 +30,9 @@ struct HourlyItemView: View {
                 Text("\(item.precipitationProbability)%")
                     .font(.system(size: 12))
                     .foregroundStyle(.cyan.opacity(0.9))
+            } else {
+                Spacer()
+                    .frame(height: 15)
             }
         }
     }

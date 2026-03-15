@@ -27,16 +27,20 @@ final class LocationManager: NSObject {
     func requestLocation() async throws -> CLLocation {
         switch manager.authorizationStatus {
         case .notDetermined:
+            status = .loading
             manager.requestWhenInUseAuthorization()
             return try await waitForLocation()
         case .authorizedWhenInUse, .authorizedAlways:
             status = .loading
             return try await waitForLocation()
         case .denied:
+            status = .denied
             throw LocationError.permissionDenied
         case .restricted:
+            status = .denied
             throw LocationError.permissionRestricted
         @unknown default:
+            status = .failed
             throw LocationError.locationUnavailable
         }
     }
@@ -63,6 +67,7 @@ final class LocationManager: NSObject {
     }
 
     private func handleTimeout() {
+        status = .failed
         manager.stopUpdatingLocation()
         continuation?.resume(throwing: LocationError.timeout)
         continuation = nil
@@ -85,6 +90,7 @@ extension LocationManager: CLLocationManagerDelegate {
         didUpdateLocations locations: [CLLocation]
     ) {
         guard let location = locations.last else { return }
+        status = .authorized
         timeoutTask?.cancel()
         continuation?.resume(returning: location)
         continuation = nil
@@ -94,6 +100,7 @@ extension LocationManager: CLLocationManagerDelegate {
         _ manager: CLLocationManager,
         didFailWithError error: Error
     ) {
+        status = .failed
         timeoutTask?.cancel()
         let locationError: LocationError = (error as? CLError)?.code == .denied
             ? .permissionDenied
@@ -106,9 +113,11 @@ extension LocationManager: CLLocationManagerDelegate {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             if continuation != nil {
+                status = .loading
                 manager.requestLocation()
             }
         case .denied, .restricted:
+            status = .denied
             let error: LocationError = manager.authorizationStatus == .denied
                 ? .permissionDenied
                 : .permissionRestricted

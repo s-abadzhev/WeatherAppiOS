@@ -11,6 +11,8 @@ final class UserDefaultsCityStorage: CityStorage {
 
     private let key = "saved_cities"
     private let defaults: UserDefaults
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -18,7 +20,7 @@ final class UserDefaultsCityStorage: CityStorage {
 
     func saveCities(_ cities: [City]) {
         let dtos = cities.map { CityStorageDTO(from: $0) }
-        if let data = try? JSONEncoder().encode(dtos) {
+        if let data = try? encoder.encode(dtos) {
             defaults.set(data, forKey: key)
         }
     }
@@ -26,7 +28,7 @@ final class UserDefaultsCityStorage: CityStorage {
     func loadCities() -> [City] {
         guard
             let data = defaults.data(forKey: key),
-            let dtos = try? JSONDecoder().decode([CityStorageDTO].self, from: data)
+            let dtos = try? decoder.decode([CityStorageDTO].self, from: data)
         else { return [] }
 
         return dtos.map { $0.toDomain() }

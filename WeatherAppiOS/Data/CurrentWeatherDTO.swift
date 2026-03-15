@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct CurrentWeatherResponseDTO: Decodable {
+struct CurrentWeatherResponseDTO: Decodable, Sendable {
     let current: CurrentWeatherDTO
 }
 
-struct CurrentWeatherDTO: Decodable {
+struct CurrentWeatherDTO: Decodable, Sendable {
     let temperature2M: Double
     let relativeHumidity2M: Int
     let apparentTemperature: Double

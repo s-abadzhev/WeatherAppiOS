@@ -19,9 +19,9 @@ final class WeatherRepositoryImpl: WeatherRepository {
     }
 
     func fetchCurrentWeather(lat: Double, lon: Double) async throws -> Weather {
-        let city = try await cityRepository.reverseGeocode(lat: lat, lon: lon)
-        let weather: CurrentWeatherResponseDTO = try await networkClient.request(.currentWeather(lat: lat, lon: lon))
-        return WeatherMapper.toDomain(response: weather, city: city)
+        async let city = cityRepository.reverseGeocode(lat: lat, lon: lon)
+        async let weatherResponse: CurrentWeatherResponseDTO = networkClient.request(.currentWeather(lat: lat, lon: lon))
+        return try await WeatherMapper.toDomain(response: weatherResponse, city: city)
     }
 
     func fetchForecast(lat: Double, lon: Double) async throws -> (daily: [Forecast], hourly: [HourlyForecast]) {

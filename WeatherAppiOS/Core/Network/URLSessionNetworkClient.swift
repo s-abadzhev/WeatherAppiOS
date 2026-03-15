@@ -8,7 +8,7 @@
 import Foundation
 
 
-final class URLSessionNetworkClient: NetworkClient {
+final class URLSessionNetworkClient: NetworkClient, @unchecked Sendable {
 
     static let shared = URLSessionNetworkClient()
 

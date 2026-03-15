@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WeatherCondition {
+enum WeatherCondition: Equatable {
     case clearSky
     case partlyCloudy
     case overcast

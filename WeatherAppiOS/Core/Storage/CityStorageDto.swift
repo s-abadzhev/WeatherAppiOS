@@ -8,14 +8,12 @@
 import Foundation
 
 struct CityStorageDTO: Codable {
-    let id: UUID
     let name: String
     let country: String
     let latitude: Double
     let longitude: Double
 
     init(from city: City) {
-        self.id = city.id
         self.name = city.name
         self.country = city.country
         self.latitude = city.latitude
@@ -24,7 +22,6 @@ struct CityStorageDTO: Codable {
 
     func toDomain() -> City {
         City(
-            id: id,
             name: name,
             country: country,
             latitude: latitude,

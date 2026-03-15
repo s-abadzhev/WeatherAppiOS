@@ -50,7 +50,10 @@ final class HomeViewModel {
     }
 
     func loadWeather(lat: Double, lon: Double) async {
+        isLoading = true
         error = nil
+        defer { isLoading = false }
+
         do {
             async let weatherRequest = repository.fetchCurrentWeather(lat: lat, lon: lon)
             async let forecastRequest = repository.fetchForecast(lat: lat, lon: lon)

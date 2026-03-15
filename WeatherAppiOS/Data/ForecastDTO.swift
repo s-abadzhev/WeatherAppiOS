@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct ForecastResponseDTO: Decodable {
+struct ForecastResponseDTO: Decodable, Sendable {
     let daily: DailyDTO
     let hourly: HourlyDTO
 }
 
-struct DailyDTO: Decodable {
+struct DailyDTO: Decodable, Sendable {
     let time: [String]
     let temperature2MMax: [Double]
     let temperature2MMin: [Double]
@@ -21,7 +21,7 @@ struct DailyDTO: Decodable {
     let weatherCode: [Int]
 }
 
-struct HourlyDTO: Decodable {
+struct HourlyDTO: Decodable, Sendable {
     let time: [String]
     let temperature2M: [Double]
     let precipitationProbability: [Int]

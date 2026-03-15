@@ -14,15 +14,16 @@ final class AppCoordinator {
     var selectedCity: City?
     var isSearchPresented = false
 
-    let repository: WeatherRepository
-    let locationManager: LocationManager
-    let cityStorage: CityStorage
-    let cityRepository: CityRepository
+    let homeViewModel: HomeViewModel
+    let searchViewModel: SearchViewModel
 
     init() {
-        self.cityRepository = CityRepositoryImpl()
-        self.repository = WeatherRepositoryImpl(cityRepository: self.cityRepository)
-        self.locationManager = LocationManager()
-        self.cityStorage = UserDefaultsCityStorage()
+        let cityRepository = CityRepositoryImpl()
+        let cityStorage = UserDefaultsCityStorage()
+        let repository = WeatherRepositoryImpl(cityRepository: cityRepository)
+        let locationManager = LocationManager()
+
+        self.homeViewModel = HomeViewModel(repository: repository, locationManager: locationManager)
+        self.searchViewModel = SearchViewModel(cityRepository: cityRepository, storage: cityStorage)
     }
 }
