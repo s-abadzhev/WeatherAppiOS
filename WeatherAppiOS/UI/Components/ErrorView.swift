@@ -25,7 +25,7 @@ struct ErrorView: View {
                 .padding(.horizontal, 32)
 
             Button(action: onRetry) {
-                Text("Повторить")
+                Text(L10n.Error.retry)
                     .font(.system(size: 16, weight: .medium))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 32)
