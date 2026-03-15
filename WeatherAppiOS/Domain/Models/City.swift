@@ -28,3 +28,9 @@ struct City: Identifiable, Hashable {
         self.longitude = longitude
     }
 }
+
+extension City: Equatable {
+    public static func == (lhs: City, rhs: City) -> Bool {
+        lhs.id == rhs.id
+    }
+}

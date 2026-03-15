@@ -30,8 +30,6 @@ final class SearchViewModel {
         self.savedCities = storage.loadCities()
     }
 
-    // MARK: - Search
-
     func onQueryChanged() {
         searchTask?.cancel()
 
@@ -62,8 +60,6 @@ final class SearchViewModel {
         }
     }
 
-    // MARK: - Saved Cities
-
     func saveCity(_ city: City) {
         guard !savedCities.contains(where: { $0.id == city.id }) else { return }
         savedCities.append(city)
@@ -72,11 +68,6 @@ final class SearchViewModel {
 
     func removeCity(_ city: City) {
         savedCities.removeAll { $0.id == city.id }
-        storage.saveCities(savedCities)
-    }
-
-    func removeCity(at offsets: IndexSet) {
-        offsets.sorted(by: >).forEach { savedCities.remove(at: $0) }
         storage.saveCities(savedCities)
     }
 }
